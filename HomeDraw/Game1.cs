@@ -30,10 +30,12 @@ namespace HomeDraw
         // Pet properties
         private Vector2 _petPosition;
         private float _petVelocityY;
+        private float _petVelocityX;
         private bool _isPetJumping;
         private const float JumpForce = -400f;
         private const float Gravity = 800f;
         private const float GroundY = 450f;
+        private const float MoveSpeed = 200f;
         
         // Keyboard state for pet jumping
         private KeyboardState _previousKeyboardState;
@@ -96,9 +98,30 @@ namespace HomeDraw
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Handle pet jumping with spacebar
+            // Handle pet jumping with spacebar and movement with A/D keys
             KeyboardState currentKeyboardState = Keyboard.GetState();
             
+            // Horizontal movement
+            _petVelocityX = 0f;
+            if (currentKeyboardState.IsKeyDown(Keys.A))
+            {
+                _petVelocityX = -MoveSpeed;
+            }
+            else if (currentKeyboardState.IsKeyDown(Keys.D))
+            {
+                _petVelocityX = MoveSpeed;
+            }
+            
+            // Apply horizontal movement
+            _petPosition.X += _petVelocityX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            // Keep pet within screen bounds
+            if (_petPosition.X < 0)
+                _petPosition.X = 0;
+            if (_petPosition.X > 750) // 800 - 50 (pet width)
+                _petPosition.X = 750;
+            
+            // Jumping
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !_isPetJumping)
             {
                 _petVelocityY = JumpForce;
@@ -142,6 +165,11 @@ namespace HomeDraw
             
             // Draw the pet (in front of everything)
             _spriteBatch.Draw(_petTexture, _petPosition, Color.White);
+            
+            // Draw control instructions
+            string controls = "Controls: A - Move Left | D - Move Right | Space - Jump";
+            Vector2 controlsSize = _font.MeasureString(controls);
+            _spriteBatch.DrawString(_font, controls, new Vector2((800 - controlsSize.X) / 2, 550), Color.White);
             
             // Draw text label (centered)
             string text = "My House";
