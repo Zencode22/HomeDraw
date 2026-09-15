@@ -28,3 +28,5 @@ C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\obj\Debug\net8.0\refint\
 C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\obj\Debug\net8.0\HomeDraw.pdb
 C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\obj\Debug\net8.0\HomeDraw.genruntimeconfig.cache
 C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\obj\Debug\net8.0\ref\HomeDraw.dll
+C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\bin\Debug\net8.0\Content\grass.xnb
+C:\Users\conno\Documents\GitHub\Codes\HomeDraw\HomeDraw\bin\Debug\net8.0\Content\pet.xnb

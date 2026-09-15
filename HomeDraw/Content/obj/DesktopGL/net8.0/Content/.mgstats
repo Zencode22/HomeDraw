@@ -1,5 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/door.png","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/door.xnb","TextureProcessor","Texture2DContent",643,160085,0.0044063
+"C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/grass.png","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/grass.xnb","TextureProcessor","Texture2DContent",1512,480085,0.1375142
 "C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/house.png","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/house.xnb","TextureProcessor","Texture2DContent",1058,160085,0.1071088
+"C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/pet.png","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/pet.xnb","TextureProcessor","Texture2DContent",343,10085,0.0022347
 "C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/roof.png","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/roof.xnb","TextureProcessor","Texture2DContent",804,160085,0.0098114
 "C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/spritefont.spritefont","C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/spritefont.xnb","FontDescriptionProcessor","SpriteFontContent",488,70681,0.0751636
