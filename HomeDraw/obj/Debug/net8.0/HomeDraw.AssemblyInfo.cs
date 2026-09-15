@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HomeDraw")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44745e32636d69e00da3635c749e2b3be22afffe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d0eac4994a9ecf7a3029e8c094a71db04c6cf85")]
 [assembly: System.Reflection.AssemblyProductAttribute("HomeDraw")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HomeDraw")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
