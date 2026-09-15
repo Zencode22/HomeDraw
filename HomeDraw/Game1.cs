@@ -58,11 +58,11 @@ namespace HomeDraw
             // Stack them properly with house sitting on grass:
             // Grass top is at Y=450, house (200px tall) should sit on top of it
             // House bottom at Y=450, so house top at Y=250 (450 - 200)
-            _housePosition = new Vector2(centerX, 250); 
+            _housePosition = new Vector2(centerX, 300); 
             // Roof (200px tall) sits on top of house, so roof bottom at Y=250, roof top at Y=50
-            _roofPosition = new Vector2(centerX, 50);  
+            _roofPosition = new Vector2(centerX, 150);  
             // Door sits on the house wall
-            _doorPosition = new Vector2(centerX, 270);  
+            _doorPosition = new Vector2(centerX, 320);  
             
             // Grass position - spans the bottom of the screen
             _grassPosition = new Vector2(0, GroundY);
