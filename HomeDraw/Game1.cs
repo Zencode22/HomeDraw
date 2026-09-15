@@ -55,12 +55,13 @@ namespace HomeDraw
             // The images are 200 wide. So, starting X is 400 - 100 = 300.
             int centerX = 300; 
 
-            // Stack them perfectly:
-            _roofPosition = new Vector2(centerX, 30);  // Moved UP so it sits on top of the wall
-            _housePosition = new Vector2(centerX, 180); // Wall sits directly below roof
-            _doorPosition = new Vector2(centerX, 200);  // Door sits directly below wall
+            // Stack them perfectly with house sitting on grass:
+            // Grass is at Y=450, house should sit on top of it
+            _roofPosition = new Vector2(centerX, 300);  // Roof on top of house
+            _housePosition = new Vector2(centerX, 350); // House wall sits below roof, above grass
+            _doorPosition = new Vector2(centerX, 370);  // Door sits directly below wall
             
-            // Grass position - spans the bottom of the screen
+            // Grass position - spans the bottom of the screen (in front of house base)
             _grassPosition = new Vector2(0, GroundY);
             
             // Pet initial position - starts on the ground near the house
@@ -128,15 +129,15 @@ namespace HomeDraw
             
             _spriteBatch.Begin();
             
-            // Draw the grass first (background layer)
+            // Draw the grass first (background layer - behind the house)
             _spriteBatch.Draw(_grassTexture, _grassPosition, Color.White);
             
-            // Draw the house components
+            // Draw the house components (in front of grass)
             _spriteBatch.Draw(_houseTexture, _housePosition, Color.White);
             _spriteBatch.Draw(_roofTexture, _roofPosition, Color.White);
             _spriteBatch.Draw(_doorTexture, _doorPosition, Color.White);
             
-            // Draw the pet
+            // Draw the pet (in front of everything)
             _spriteBatch.Draw(_petTexture, _petPosition, Color.White);
             
             // Draw text label (centered)
