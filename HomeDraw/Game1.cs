@@ -13,6 +13,8 @@ namespace HomeDraw
         private Texture2D _houseTexture;
         private Texture2D _roofTexture;
         private Texture2D _doorTexture;
+        private Texture2D _grassTexture;
+        private Texture2D _petTexture;
         
         // Font
         private SpriteFont _font;
@@ -21,6 +23,20 @@ namespace HomeDraw
         private Vector2 _housePosition;
         private Vector2 _roofPosition;
         private Vector2 _doorPosition;
+        
+        // Grass position
+        private Vector2 _grassPosition;
+        
+        // Pet properties
+        private Vector2 _petPosition;
+        private float _petVelocityY;
+        private bool _isPetJumping;
+        private const float JumpForce = -400f;
+        private const float Gravity = 800f;
+        private const float GroundY = 450f;
+        
+        // Keyboard state for pet jumping
+        private KeyboardState _previousKeyboardState;
 
         public Game1()
         {
@@ -43,6 +59,14 @@ namespace HomeDraw
             _roofPosition = new Vector2(centerX, 30);  // Moved UP so it sits on top of the wall
             _housePosition = new Vector2(centerX, 180); // Wall sits directly below roof
             _doorPosition = new Vector2(centerX, 200);  // Door sits directly below wall
+            
+            // Grass position - spans the bottom of the screen
+            _grassPosition = new Vector2(0, GroundY);
+            
+            // Pet initial position - starts on the ground near the house
+            _petPosition = new Vector2(500, GroundY);
+            _petVelocityY = 0f;
+            _isPetJumping = false;
     
             base.Initialize();
         }
@@ -55,6 +79,8 @@ namespace HomeDraw
             _houseTexture = Content.Load<Texture2D>("house");
             _roofTexture = Content.Load<Texture2D>("roof");
             _doorTexture = Content.Load<Texture2D>("door");
+            _grassTexture = Content.Load<Texture2D>("grass");
+            _petTexture = Content.Load<Texture2D>("pet");
             
             // Load font
             _font = Content.Load<SpriteFont>("spritefont");
@@ -66,6 +92,33 @@ namespace HomeDraw
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // Handle pet jumping with spacebar
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            
+            if (currentKeyboardState.IsKeyDown(Keys.Space) && !_isPetJumping)
+            {
+                _petVelocityY = JumpForce;
+                _isPetJumping = true;
+            }
+            
+            // Apply gravity to pet
+            if (_isPetJumping)
+            {
+                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _petVelocityY += Gravity * deltaTime;
+                _petPosition.Y += _petVelocityY * deltaTime;
+                
+                // Check if pet has landed back on the ground
+                if (_petPosition.Y >= GroundY)
+                {
+                    _petPosition.Y = GroundY;
+                    _petVelocityY = 0f;
+                    _isPetJumping = false;
+                }
+            }
+            
+            _previousKeyboardState = currentKeyboardState;
+
             base.Update(gameTime);
         }
 
@@ -75,10 +128,16 @@ namespace HomeDraw
             
             _spriteBatch.Begin();
             
+            // Draw the grass first (background layer)
+            _spriteBatch.Draw(_grassTexture, _grassPosition, Color.White);
+            
             // Draw the house components
             _spriteBatch.Draw(_houseTexture, _housePosition, Color.White);
             _spriteBatch.Draw(_roofTexture, _roofPosition, Color.White);
             _spriteBatch.Draw(_doorTexture, _doorPosition, Color.White);
+            
+            // Draw the pet
+            _spriteBatch.Draw(_petTexture, _petPosition, Color.White);
             
             // Draw text label (centered)
             string text = "My House";
