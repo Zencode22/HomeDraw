@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="HomeDraw/HomeDraw.csproj" />
+  <Project Path="TextureGenerator/TextureGenerator.csproj" />
+</Solution>
