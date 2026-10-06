@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/spritefont.spritefont</SourceFile>
+  <SourceTime>2026-09-08T17:24:43.7963062-05:00</SourceTime>
+  <DestFile>C:/Users/conno/Documents/GitHub/Codes/HomeDraw/HomeDraw/Content/bin/DesktopGL/Content/spritefont.xnb</DestFile>
+  <DestTime>2026-09-15T16:03:21.193274-05:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2026-08-14T16:50:10-05:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2026-08-14T16:50:10-05:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
