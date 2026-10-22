@@ -175,8 +175,15 @@ namespace HomeDraw.Entities
 
             foreach (Pet pet in pets)
             {
-                Rectangle inflated = Rectangle.Inflate(pet.GetBoundingBox(),
-                                                       PetSafetyMargin, PetSafetyMargin);
+                // Note: Microsoft.Xna.Framework.Rectangle has no static Inflate
+                // overload in .NET 8 (the instance method was only added in .NET 9),
+                // so grow the box manually for cross-framework compatibility.
+                Rectangle petBox = pet.GetBoundingBox();
+                Rectangle inflated = new Rectangle(
+                    petBox.X - PetSafetyMargin,
+                    petBox.Y - PetSafetyMargin,
+                    petBox.Width + PetSafetyMargin * 2,
+                    petBox.Height + PetSafetyMargin * 2);
                 if (inflated.Intersects(probe))
                     return false;
             }
