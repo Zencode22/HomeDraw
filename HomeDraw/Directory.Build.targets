@@ -1,0 +1,57 @@
+<Project>
+
+  <!--
+    ============================================================
+    MonoGame content-build fallback for restricted environments
+    ============================================================
+
+    The MonoGame Content Builder (mgcb) needs the native image codec "libmgpipeline.so".
+    On some machines that library cannot load (for example: it requires GLIBC >= 2.38,
+    which is unavailable in many containers and older Linux distros). When that happens
+    `dotnet build` aborts inside mgcb and the VS Codium debugger can never start.
+
+    Set the environment variable (or MSBuild property):
+
+        SkipMonoGameContentBuild=true
+
+    With it set, the standard MGCB pipeline's "dotnet tool restore" + mgcb invocations
+    are neutralized, and instead the prebuilt .xnb files from
+    HomeDraw/Content/bin/DesktopGL/Content/ are copied straight into $(OutDir)Content/,
+    exactly where a normal MonoGame build would put them. F5 debugging then works
+    end-to-end without mgcb.
+
+    On Windows/macOS or any Linux with a working mgcb, leave the variable unset:
+    `dotnet build` rebuilds the content from the source .png assets as usual.
+  -->
+
+  <Target Name="SkipRunContentBuilder" BeforeTargets="RunContentBuilder">
+    <PropertyGroup Condition="'$(SkipMonoGameContentBuild)' == 'true'">
+      <!-- Neutralize the two <Exec> tasks inside MonoGame's RunContentBuilder target:
+           they become harmless "echo ..." commands. -->
+      <DotnetCommand>echo</DotnetCommand>
+      <MGCBCommand>[skipped-mgcb-because-SkipMonoGameContentBuild=true]</MGCBCommand>
+      <MonoGameMGCBAdditionalArguments></MonoGameMGCBAdditionalArguments>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CopyPrebuiltContentToOutput"
+          Condition="'$(SkipMonoGameContentBuild)' == 'true'"
+          AfterTargets="IncludeContent">
+
+    <PropertyGroup>
+      <_PrebuiltContentRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/Content/bin/DesktopGL/Content/'))</_PrebuiltContentRoot>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_PrebuiltXnb Include="$(_PrebuiltContentRoot)**/*.xnb" />
+    </ItemGroup>
+
+    <Error Text="SkipMonoGameContentBuild=true but no prebuilt .xnb files were found in '$(_PrebuiltContentRoot)'. Build the content once on a machine where mgcb works (Windows/macOS/newer glibc), copy Content/bin/DesktopGL/Content here, then rebuild."
+           Condition="'@(_PrebuiltXnb)' == ''" />
+
+    <Copy SourceFiles="@(_PrebuiltXnb)"
+          DestinationFiles="@(_PrebuiltXnb->'$(OutDir)Content/%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

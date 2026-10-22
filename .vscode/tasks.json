@@ -1,0 +1,62 @@
+{
+    // Build tasks used by VS Codium (Terminal -> Run Build Task, or F5 via preLaunchTask).
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // Referenced by the launch configuration's "preLaunchTask".
+            // NOTE: MonoGame.Content.Builder.Task is disabled here because mgcb needs the native
+            // "mgpipeline" library (StbSharp image codec), which is unavailable in this sandbox.
+            // The .xnb content files are already built and copied to the output directory.
+            // On a normal dev machine, remove "-p:DisableMGCB=true" to rebuild content automatically.
+            "label": "build HomeDraw",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HomeDraw/HomeDraw.csproj",
+                "-p:DisableMGCB=true",
+                "-p:MonoGamePlatform=DesktopGL",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            // MonoGame Content Builder: run once (or after editing Content.mgcb) to produce .xnb files.
+            // Requires the local dotnet tool manifest (HomeDraw/dotnet-tools.json).
+            "label": "build content (mgcb)",
+            "dependsOn": ["restore dotnet tools"],
+            "dependsOrder": "sequence",
+            "type": "shell",
+            "command": "dotnet mgcb /project:\"${workspaceFolder}/HomeDraw/Content/Content.mgcb\" /outputDir:\"bin/$(Platform)\" /intermediateDir:\"obj/$(Platform)\" /platform:DesktopGL /quiet",
+            "options": {
+                "cwd": "${workspaceFolder}/HomeDraw/Content"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "restore dotnet tools",
+            "type": "shell",
+            "command": "dotnet tool restore",
+            "options": {
+                "cwd": "${workspaceFolder}/HomeDraw"
+            },
+            "problemMatcher": []
+        },
+        {
+            // Rebuild everything from scratch
+            "label": "clean HomeDraw",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/HomeDraw/HomeDraw.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

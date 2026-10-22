@@ -1,0 +1,10 @@
+{
+    // Workspace settings for VS Codium + C# development
+    "dotnet.defaultSolution": "HomeDraw.slnx",
+    // Keep the debugger stepping through game code but not framework internals
+    "debugJustMyCode": true,
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    }
+}

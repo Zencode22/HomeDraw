@@ -175,8 +175,10 @@ namespace HomeDraw.Entities
 
             foreach (Pet pet in pets)
             {
+                // Inflate by the safety margin on all sides (Rectangle.Inflate grows
+                // width/height by twice the amount, so halve it here).
                 Rectangle inflated = Rectangle.Inflate(pet.GetBoundingBox(),
-                                                       PetSafetyMargin, PetSafetyMargin);
+                                                       PetSafetyMargin / 2, PetSafetyMargin / 2);
                 if (inflated.Intersects(probe))
                     return false;
             }

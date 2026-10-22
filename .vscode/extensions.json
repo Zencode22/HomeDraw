@@ -1,0 +1,10 @@
+{
+    // Extensions VS Codium needs to debug this MonoGame (C# / .NET 8) project.
+    // On VS Codium, install these from the Open VSX registry (Extensions view -> Install).
+    "recommendations": [
+        // C# language support + F5 debugging via netcoredbg (works with Open VSX, unlike ms-dotnettools.csharp)
+        "muqqit-corp.cs-dev",
+        // Optional: richer IntelliSense / Roslyn-based language server alternative
+        "altf4.cs-language-service"
+    ]
+}
