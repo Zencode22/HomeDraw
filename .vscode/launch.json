@@ -23,6 +23,20 @@
             }
         },
         {
+            // Launch and debug the texture generator tool (press F5 after selecting it)
+            "name": "Debug TextureGenerator (console)",
+            "type": "netcoredbg",
+            "request": "launch",
+            "assembly": "${workspaceFolder}/TextureGenerator/bin/Debug/net8.0/TextureGenerator.dll",
+            "cwd": "${workspaceFolder}/TextureGenerator",
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "preLaunchTask": "build TextureGenerator",
+            "env": {
+                "DOTNET_CLI_TELEMETRY_OPTOUT": "1"
+            }
+        },
+        {
             // Attach to an already-running game process (pick HomeDraw from the process list)
             "name": "Attach to HomeDraw process",
             "type": "netcoredbg",
