@@ -1,1 +1,3 @@
-(empty)
+*.xnb
+obj/
+bin/
