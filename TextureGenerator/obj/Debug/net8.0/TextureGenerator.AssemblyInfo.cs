@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TextureGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d561f2cf2264cc59df8ec2bd6d6e3dfe303b00ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dd28ad6bc8e17f19cf206f2786d6e1c8131a227")]
 [assembly: System.Reflection.AssemblyProductAttribute("TextureGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TextureGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
