@@ -26,11 +26,12 @@ namespace HomeDraw.UI
         }
 
         /// <summary>
-        /// Draws per-pet control instructions plus the centered title.
+        /// Draws per-pet control instructions plus scores, the centered title,
+        /// and the winner banner when the game is over.
         /// </summary>
         public void Draw(SpriteBatch spriteBatch, IReadOnlyList<Pet> pets)
         {
-            // Draw control instructions for each player
+            // Draw control instructions for each player (with live ghost score)
             float controlsY = ControlsStartY;
             foreach (Pet pet in pets)
             {
@@ -41,12 +42,21 @@ namespace HomeDraw.UI
 
             // Draw title text (centered horizontally, placed below the door)
             DrawCentered(spriteBatch, TitleText, TitleY, Color.White);
+
+            // Winner banner: ends the round
+            if (Pet.IsGameOver)
+            {
+                string banner = $"{Pet.WinnerName} wins with {Pet.WinningScore} ghosts!";
+                DrawCentered(spriteBatch, banner, 60f, Color.Gold);
+                DrawCentered(spriteBatch, "Press Enter to play again", 100f, Color.White);
+            }
         }
 
         private static string BuildControlsText(Pet pet) =>
             $"{pet.Name}: {FormatKey(pet.MoveLeftKey)} - Move Left | " +
             $"{FormatKey(pet.MoveRightKey)} - Move Right | " +
-            $"{FormatKey(pet.JumpKey)} - Jump";
+            $"{FormatKey(pet.JumpKey)} - Jump | " +
+            $"Ghosts: {pet.Score}/{Pet.WinningScore}";
 
         // Friendly names for keys that Keys.ToString() would print awkwardly
         private static string FormatKey(Keys key)

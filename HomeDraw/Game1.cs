@@ -20,6 +20,7 @@ namespace HomeDraw
         // Game subsystems
         private House _house;
         private readonly List<Pet> _pets = new List<Pet>();
+        private GhostManager _ghostManager;
         private Hud _hud;
 
         // Screen size
@@ -62,6 +63,11 @@ namespace HomeDraw
             _pets.Add(new Pet(petTexture, new Vector2(600, House.GroundY), Color.Orange,
                 "Pet 2 (Orange)", Keys.Left, Keys.Right, Keys.Up, House.GroundY, ScreenWidth));
 
+            // Ghosts roam the open yard above the HUD strip; the manager spawns
+            // 4 of them in random, non-overlapping locations.
+            Rectangle ghostBounds = new Rectangle(0, 0, ScreenWidth, (int)House.GroundY - Ghost.Height);
+            _ghostManager = new GhostManager(petTexture, ghostBounds);
+
             // Build the HUD
             _hud = new Hud(font, ScreenWidth);
         }
@@ -74,6 +80,16 @@ namespace HomeDraw
 
             KeyboardState keyboard = Keyboard.GetState();
 
+            // Once a pet has grabbed 10 ghosts, freeze play until Enter restarts.
+            if (Pet.IsGameOver)
+            {
+                if (keyboard.IsKeyDown(Keys.Enter))
+                    RestartRound();
+
+                base.Update(gameTime);
+                return;
+            }
+
             // Update all pets with their own controls
             foreach (Pet pet in _pets)
             {
@@ -83,7 +99,30 @@ namespace HomeDraw
             // Keep pets from overlapping each other
             CollisionManager.ResolvePetCollisions(_pets);
 
+            // Move ghosts, bounce them off each other, and let pets grab them
+            _ghostManager.Update(gameTime, _pets);
+
             base.Update(gameTime);
+        }
+
+        // Reset scores and re-spawn all ghosts for a fresh round.
+        private void RestartRound()
+        {
+            Pet.ResetGame();
+            foreach (Pet pet in _pets)
+            {
+                pet.ResetScore();
+            }
+
+            // Remove every ghost and spawn a new set of 4.
+            foreach (Ghost ghost in new List<Ghost>(_ghostManager.Ghosts))
+            {
+                _ghostManager.RemoveGhost(ghost);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                _ghostManager.AddGhost();
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -95,7 +134,9 @@ namespace HomeDraw
             // Background layer: grass + house parts
             _house.Draw(_spriteBatch);
 
-            // Entities: pets (in front of everything), tinted to tell them apart
+            // Entities: ghosts (wander the yard), then pets on top
+            _ghostManager.Draw(_spriteBatch);
+
             foreach (Pet pet in _pets)
             {
                 pet.Draw(_spriteBatch);

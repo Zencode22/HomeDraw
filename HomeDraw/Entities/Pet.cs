@@ -18,9 +18,52 @@ namespace HomeDraw.Entities
         private const int Width = 50;
         private const int Height = 50;
 
+        // Score / win rules (ghost grabbing)
+        public const int WinningScore = 10;
+
         public Vector2 Position { get; private set; }
         public Color Tint { get; }
         public string Name { get; }
+
+        /// <summary>Number of ghosts this pet has grabbed.</summary>
+        public int Score { get; private set; }
+
+        /// <summary>True once this pet has reached the winning score.</summary>
+        public bool HasWon => Score >= WinningScore;
+
+        /// <summary>True when a pet has won and the round is over.</summary>
+        public static bool IsGameOver { get; private set; }
+
+        /// <summary>Name of the pet that won, or null if nobody has won yet.</summary>
+        public static string WinnerName { get; private set; }
+
+        /// <summary>Award one point for grabbing a ghost; ends the game at the winning score.</summary>
+        public void ScoreGhost()
+        {
+            if (IsGameOver || HasWon)
+                return;
+
+            Score++;
+
+            if (Score >= WinningScore)
+            {
+                IsGameOver = true;
+                WinnerName = Name;
+            }
+        }
+
+        /// <summary>Resets scores so a new round can start.</summary>
+        public void ResetScore()
+        {
+            Score = 0;
+        }
+
+        /// <summary>Clears the game-over state for all pets (call alongside ResetScore).</summary>
+        public static void ResetGame()
+        {
+            IsGameOver = false;
+            WinnerName = null;
+        }
 
         // Screen bounds used to keep the pet on-screen
         private float _minX = float.MinValue;
@@ -73,6 +116,10 @@ namespace HomeDraw.Entities
         /// </summary>
         public void Update(GameTime gameTime, KeyboardState keyboard)
         {
+            // Once a pet has won, everyone freezes.
+            if (IsGameOver)
+                return;
+
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Horizontal movement
